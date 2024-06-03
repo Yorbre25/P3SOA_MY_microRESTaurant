@@ -21,7 +21,6 @@ def sign_up():
     data = request.json
     email = data['email']
     password = data['password']
-    user = None
     try: 
         user = auth.create_user_with_email_and_password(email=email, password=password)
         return jsonify(user), 200
