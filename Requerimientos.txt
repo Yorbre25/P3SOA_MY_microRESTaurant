@@ -1,0 +1,12 @@
+Hacer Diagrama (Gerald)
+Refactor lo ya implementado a microservicios (Todos)
+Implementar las nuevas funciones de reservación (Adriana y Ignacio)
+Hacer un Docker file para cada microservicio (todos)
+
+HTTPS (Todos)
+Ver como se usa JWT (Yordi, Gerald)
+Aprende a usar Minikube (Andrey)
+
+Ver que y cumplir con Zero Trust (todos)
+Terminar docu de antes (Ignacio y Adriana)
+Documentar varas de seguridad (Todos)
