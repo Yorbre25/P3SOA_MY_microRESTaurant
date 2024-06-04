@@ -1,2 +1,4 @@
 microrest/
 firebase_credentials.py
+firebase_admin_sdk_credentials.json
+__pycache__
