@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from firebase_credentials import firebase_config
 import firebase_admin
+from firebase_admin import auth
 from firebase_admin import credentials
 from firebase_admin import firestore
 import pyrebase
@@ -10,7 +11,7 @@ app = Flask(__name__)
 
 # Init Firebase SDK to create user
 firebase = pyrebase.initialize_app(firebase_config)
-auth = firebase.auth()
+authentification = firebase.auth()
 
 # Init Firebase Admin SDK to user firestore
 cred = credentials.Certificate('Auth/firebase_admin_sdk_credentials.json')
@@ -29,11 +30,16 @@ def add_data(email, name):
     doc_ref = db.collection('users').document(email)
     doc_ref.set({
         'name': name,
-        'isAdmin': False
+        "email": email,
     })
 
 def sign_up_with_firebase(email, password):
-    return auth.create_user_with_email_and_password(email=email, password=password)
+    user = authentification.create_user_with_email_and_password(email=email, password=password)
+    add_custom_claim = {
+        'isAdmin': False
+    }
+    auth.set_custom_user_claims(user["localId"], add_custom_claim)
+    return authentification.sign_in_with_email_and_password(email=email, password=password)
 
 @app.route('/sign_up', methods=['POST'])
 def sign_up():
