@@ -6,7 +6,7 @@ from firebase_admin import credentials
 """
 Esto es una demo de como verificar un JWT con firebase. 
 La vara funciona así, el JWT se agrega al header "Authorization" de las request.
-En el jwt viene info del usuario cifrada, firebase tiene una llave para descifrarlo.
+En el jwt viene info del usuario que está cifrada, firebase tiene una llave para descifrarlo.
 """
 
 """
@@ -23,7 +23,7 @@ def demo():
     token = request.headers['Authorization'] # Se obtiene el JWT del header
     decoded_token = auth.verify_id_token(token) # Se verifica el JWT. Si no es válido, se lanza una excepción.
     #Un vez decifrado podemos leer la info del usuario.
-    #Los atributos como si es admin ahora se pueden leer
+    #Los atributos como por ejemplo, si es admin ahora se pueden leer
     print(decoded_token)
     return jsonify({"message": "Todo salió bien"}), 200
 
