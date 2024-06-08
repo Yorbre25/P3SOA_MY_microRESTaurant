@@ -8,6 +8,10 @@ $Env:MINIKUBE_ACTIVE_DOCKERD = "minikube"
 & minikube -p minikube docker-env --shell powershell | Invoke-Expression
 
 
+kubectl apply -f
+
+
+
 https://stackoverflow.com/questions/38979231/imagepullbackoff-local-repository-with-minikube
 
 
