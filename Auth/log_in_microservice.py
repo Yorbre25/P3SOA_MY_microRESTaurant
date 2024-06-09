@@ -34,7 +34,6 @@ def get_user_data(email):
 
 def append_user_data(user, email):
     data = get_user_data(email)
-    user["isAdmin"] = data["isAdmin"]
     user["displayName"] = data["name"]
     return user
     
