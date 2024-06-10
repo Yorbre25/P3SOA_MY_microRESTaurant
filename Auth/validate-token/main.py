@@ -7,7 +7,7 @@ from firebase_admin import firestore
 app = Flask(__name__)
 
 
-cred = credentials.Certificate('Auth/firebase_admin_sdk_credentials.json')
+cred = credentials.Certificate('firebase_admin_sdk_credentials.json')
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
@@ -40,7 +40,7 @@ def is_token_admin(decoded_token):
     if isAdmin:
         return True
     else:
-        False
+        return False
 
 def validate_and_decode_token(token):
     try:
@@ -58,4 +58,4 @@ def handle_error(e):
         return jsonify({"Error": str(e), "Type": str(type(e))}), 500  
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000)

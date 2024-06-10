@@ -7,7 +7,7 @@ from firebase_admin import firestore
 app = Flask(__name__)
 
 
-cred = credentials.Certificate('Auth/firebase_admin_sdk_credentials.json')
+cred = credentials.Certificate('firebase_admin_sdk_credentials.json')
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
@@ -65,4 +65,4 @@ def handle_error(e):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000)
