@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-reservations
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-reservations
+  template:
+    metadata:
+      labels:
+        app: my-reservations
+    spec:
+      containers:
+      - name: my-reservations
+        image: my-reservations:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
