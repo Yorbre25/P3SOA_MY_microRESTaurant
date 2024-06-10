@@ -14,7 +14,7 @@ firebase = pyrebase.initialize_app(firebase_config)
 authentification = firebase.auth()
 
 # Init Firebase Admin SDK to user firestore
-cred = credentials.Certificate('Auth/firebase_admin_sdk_credentials.json')
+cred = credentials.Certificate('firebase_admin_sdk_credentials.json')
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
@@ -53,12 +53,10 @@ def handle_error(e):
     else:
         return jsonify({"Error": str(e), "Type": str(type(e))}), 500
     
-
-
-
+print("Server sign_up is running on port 5000")
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000)
 
 
 

@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: signup-service
+spec:
+  # replicas: 1
+  selector:
+    matchLabels:
+      app: signup-service
+  template:
+    metadata:
+      labels:
+        app: signup-service
+    spec:
+      containers:
+      - name: signup-service
+        image: signup:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
+      

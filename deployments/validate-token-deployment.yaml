@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: validate-token-service
+spec:
+  # replicas: 2
+  selector:
+    matchLabels:
+      app: validate-token-service
+  template:
+    metadata:
+      labels:
+        app: validate-token-service
+    spec:
+      containers:
+      - name: validate-token-service
+        image: validate-token:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
