@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fend-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fend-app
+  template:
+    metadata:
+      labels:
+        app: fend-app
+    spec:
+      containers:
+      - name: fend-app
+        image: fend-app:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: fend-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: fend-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30099

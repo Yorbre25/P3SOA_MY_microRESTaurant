@@ -1,0 +1,8 @@
+<nav class="navbar">
+    <h1>MyRESTaurant</h1>
+    <div class="user-welcome">
+        <span>Welcome back</span> 
+        <b>{{this.userEmail}}</b>
+        <button (click)="logout()" class="logout-btn" type="button">@if(this.userEmail){Logout}@else{Go to login}</button>
+    </div>
+</nav>
