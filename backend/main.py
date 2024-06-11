@@ -30,13 +30,14 @@ def make_admin():
 @app.route('/get-menu', methods=['GET'])
 def get_menu():
     try:
-        token_response = requests.get(f"validate-token-service:8080/is_token_valid")
-        if token_response.status_code == 200:
-            response = requests.get(f"menu-service:8080/get_menu")
-            response.raise_for_status()  # Raise exception for non-200 status codes
-            return jsonify(response.json()), response.status_code, {'Access-Control-Allow-Origin': '*'}
-        else: # invalid token
-            return jsonify(token_response.json()), token_response.status_code, {'Access-Control-Allow-Origin': '*'}
+        
+        #token_response = requests.get(f"validate-token-service:8080/is_token_valid")
+        #if token_response.status_code == 200:
+        response = requests.get("http://menu-service:8080/get_menu")
+        response.raise_for_status()  # Raise exception for non-200 status codes
+        return jsonify(response.json()), response.status_code, {'Access-Control-Allow-Origin': '*'}
+        #else: # invalid token
+         #   return jsonify(token_response.json()), token_response.status_code, {'Access-Control-Allow-Origin': '*'}
 
     except requests.exceptions.RequestException as e:
         return jsonify({"message": f"Error: {e}"}), response.status_code, {}  # Internal Server Error
@@ -92,7 +93,7 @@ def create_reservation():
 
 
 @app.route('/get-reservation', methods=['GET'])
-def create_reservation():
+def get_reservation():
     try:
         # Hacer una solicitud GET al servicio de reservas
         token_response = requests.get(f"validate-token-service:8080/is_token_valid")
@@ -103,7 +104,7 @@ def create_reservation():
         return jsonify({"message": f"Error: {e}"}), response.status_code
 
 @app.route('/update-reservation', methods=['PUT'])
-def create_reservation():
+def update_reservation():
     try:
         # Hacer una solicitud GET al servicio de reservas
         token_response = requests.get(f"validate-token-service:8080/is_token_valid")
@@ -115,7 +116,7 @@ def create_reservation():
         return jsonify({"message": f"Error: {e}"}), response.status_code
 
 @app.route('/delete-reservation', methods=['DELETE'])
-def create_reservation():
+def delete_reservation():
     try:
         # Hacer una solicitud GET al servicio de reservas
         token_response = requests.get(f"validate-token-service:8080/is_token_valid")
@@ -133,4 +134,4 @@ def index():
     return 'Welcome to the MYRESTaurant Reservation System!'
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8080)
+    app.run(host='0.0.0.0',debug=True, port=8080)
