@@ -35,7 +35,7 @@ def handle_type_error(e):
     return jsonify({"msg": "Type error"}), 400
 
 @functions_framework.http
-def manage_reservation(request):
+def create_reservation(request):
     global reservations_db  # Mover la declaración global aquí
 
     if request.method == "POST":
@@ -47,6 +47,10 @@ def manage_reservation(request):
         else:
             raise TypeError("Unsupported Media Type, Content-Type must be application/json")
     elif request.method == "GET":
+        user_id = request.args.get('user_id')
+        if user_id:
+            user_reservations = [res for res in reservations_db if res['user_id'] == int(user_id)]
+            return jsonify(user_reservations)
         return jsonify(reservations_db)
     elif request.method == "PUT":
         if request.is_json:
@@ -72,7 +76,8 @@ def manage_reservation(request):
 def catch_all(path):
     return "Unsupported Media Type. This endpoint only supports application/json.", 415
 
-
+# Alias para compatibilidad con el framework de funciones
+manage_reservations = create_reservation
 
 # Ruta para la función principal
 @app.route('/reservations', methods=['GET', 'POST', 'PUT', 'DELETE'])
