@@ -55,3 +55,5 @@ kubectl get pods
 @REM minikube service reservations-service --url
 @REM minikube service sentiment-analysis-service --url
 
+@REM minikube service backend-service
+
