@@ -5,6 +5,8 @@ import { FeedbackComponent } from "../feedback/feedback.component";
 import { MenuComponent } from "../menu/menu.component";
 import { NavbarComponent } from "../navbar/navbar.component";
 import { PromoteUserAdminComponent } from '../promote-user-admin/promote-user-admin.component';
+import { HttpClient } from '@angular/common/http';
+import { UserAccessService } from '../../services/user-access.service';
 
 @Component({
     selector: 'app-home',
@@ -18,9 +20,16 @@ export class HomeComponent implements OnInit{
     isAdmin = false;
     userName: string = "";
 
+    constructor(private userAccessService: UserAccessService){}
 
     ngOnInit(): void {
-        this.isAdmin = sessionStorage.getItem('isAdmin') == 'true';
+        console.log({val:sessionStorage.getItem('idToken')})
+        if(sessionStorage.getItem('idToken') != null){
+            this.userAccessService.isAdmin(sessionStorage.getItem('idToken') ?? '').subscribe(result => {
+                this.isAdmin = result != null;
+                console.log({resulting: result})
+            })
+        }
         this.userName = sessionStorage.getItem('email') ?? "";
     }
 
