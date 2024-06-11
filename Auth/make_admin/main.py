@@ -3,9 +3,10 @@ import firebase_admin
 from firebase_admin import auth
 from firebase_admin import credentials
 from firebase_admin import firestore
+from flask_cors import CORS
 
 app = Flask(__name__)
-
+CORS(app) # Allow CORS for all domains
 
 cred = credentials.Certificate('firebase_admin_sdk_credentials.json')
 firebase_admin.initialize_app(cred)
