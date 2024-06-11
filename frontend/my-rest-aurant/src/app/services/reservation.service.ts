@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { catchError } from 'rxjs/operators';
 import { Reservation } from '../models/reservation'; 
 import { map } from 'rxjs/operators';
+import { apiUrl } from '../environments/environment';
 
 interface ApiReservation {
   Date: string;
@@ -17,7 +18,7 @@ interface ApiReservation {
   providedIn: 'root'
 })
 export class ReservationService {
-  backEndAddress: string = "https://us-central1-my-rest-raurant-2.cloudfunctions.net";
+  backEndAddress: string = apiUrl;
 
   constructor(private http: HttpClient) { }
 

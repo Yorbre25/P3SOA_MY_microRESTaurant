@@ -2,13 +2,14 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { apiUrl } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserAccessService {
 
-  backEndAddress: string = "https://us-central1-my-rest-raurant-2.cloudfunctions.net/";
+  backEndAddress: string = apiUrl;
 
   constructor(private http: HttpClient, private afAuth: Auth,) { }
 

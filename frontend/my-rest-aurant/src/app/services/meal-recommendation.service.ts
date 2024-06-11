@@ -3,6 +3,7 @@ import { Meal } from '../models/meal';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { Observable } from 'rxjs/internal/Observable';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { apiUrl } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class MealRecommendationService {
   private _selectedMeals: BehaviorSubject<Meal[]> = new BehaviorSubject<Meal[]>([]);
   selectedMeals$: Observable<Meal[]> = this._selectedMeals.asObservable();
 
-  backEndAddress: string = "http://127.0.0.1:57887/";
+  backEndAddress: string = apiUrl;
   
   constructor(private http: HttpClient) { }
 
