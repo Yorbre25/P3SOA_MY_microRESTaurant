@@ -1,12 +1,9 @@
 from flask import Flask, request, jsonify
 import requests
 from flask_cors import CORS
-from Auth import make_admin as ma
 
 app = Flask(__name__)
 CORS(app)
-
-
 
 @app.route('/log-in', methods=['POST'])
 def log_in():
@@ -17,7 +14,6 @@ def log_in():
 
     except Exception as e:
         return jsonify({"message": f"Error: {e}"}), response.status_code
-
 
 @app.route('/make-admin', methods=['POST'])
 def make_admin():
@@ -82,18 +78,54 @@ def sign_up():
     except Exception as e:
         return jsonify({"message": f"Error: {e}"}), response.status_code
 
-###########################################
-# TODO: todo relacionado a reserva
-
-@app.route('/get-reservations', methods=['POST'])
-def get_reservations():
+@app.route('/create-reservation', methods=['POST'])
+def create_reservation():
     try:
         # Hacer una solicitud GET al servicio de reservas
-        response = requests.post(f"{base_url}/reservation-service", json=request.json)
-        return jsonify(response.json()), response.status_code
+        token_response = requests.get(f"validate-token-service:8080/is_token_valid")
+        if token_response.status_code == 200:
+            response = requests.post(f"reservation-service:8080/create_reservation", json=request.json)
+            return jsonify(response.json()), response.status_code
 
     except Exception as e:
         return jsonify({"message": f"Error: {e}"}), response.status_code
+
+
+@app.route('/get-reservation', methods=['GET'])
+def create_reservation():
+    try:
+        # Hacer una solicitud GET al servicio de reservas
+        token_response = requests.get(f"validate-token-service:8080/is_token_valid")
+        if token_response.status_code == 200:
+            response = requests.get(f"reservation-service:8080/create_reservation")
+            return jsonify(response.json()), response.status_code
+    except Exception as e:
+        return jsonify({"message": f"Error: {e}"}), response.status_code
+
+@app.route('/update-reservation', methods=['PUT'])
+def create_reservation():
+    try:
+        # Hacer una solicitud GET al servicio de reservas
+        token_response = requests.get(f"validate-token-service:8080/is_token_valid")
+        if token_response.status_code == 200:
+            response = requests.put(f"reservation-service:8080/create_reservation", json=request.json)
+            return jsonify(response.json()), response.status_code
+
+    except Exception as e:
+        return jsonify({"message": f"Error: {e}"}), response.status_code
+
+@app.route('/delete-reservation', methods=['DELETE'])
+def create_reservation():
+    try:
+        # Hacer una solicitud GET al servicio de reservas
+        token_response = requests.get(f"validate-token-service:8080/is_token_valid")
+        if token_response.status_code == 200:
+            response = requests.delete(f"reservation-service:8080/create_reservation", json=request.json)
+            return jsonify(response.json()), response.status_code
+
+    except Exception as e:
+        return jsonify({"message": f"Error: {e}"}), response.status_code
+
 
 
 @app.route('/')
