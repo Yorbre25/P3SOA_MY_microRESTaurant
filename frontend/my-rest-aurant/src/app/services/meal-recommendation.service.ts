@@ -12,7 +12,7 @@ export class MealRecommendationService {
   private _selectedMeals: BehaviorSubject<Meal[]> = new BehaviorSubject<Meal[]>([]);
   selectedMeals$: Observable<Meal[]> = this._selectedMeals.asObservable();
 
-  backEndAddress: string = "http://menu-service:8080/";
+  backEndAddress: string = "http://127.0.0.1:52682/";
   
   constructor(private http: HttpClient) { }
 
@@ -39,10 +39,7 @@ export class MealRecommendationService {
   }
 
   getMenuData(): Observable<any>{
-    const headers = new HttpHeaders({
-      'Access-Control-Allow-Origin': '*'
-    });
-    return this.http.get(this.backEndAddress + "get-menu", {headers: headers});
+    return this.http.get(this.backEndAddress + "get-menu");
   }
 
   getMealRecommendation(body: any): Observable<any> {
