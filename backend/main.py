@@ -56,6 +56,16 @@ def get_recommendation():
     except Exception as e:
         return jsonify({"message": f"Error: {e}"}), response.status_code, {}
 
+@app.route('/sentiment-api', methods=['POST'])
+def sentiment_api():
+    try:
+        response = requests.post("http://sentiment-analysis-service:8080/recommendations", json=request.json)
+        return jsonify(response.json()), response.status_code, {'Access-Control-Allow-Origin': '*'}
+    except Exception as e:
+        return jsonify({"message": f"Error: {e}"}), response.status_code, {}
+
+
+
 @app.route('/reset-password', methods=['POST'])
 def reset_password():
     try:

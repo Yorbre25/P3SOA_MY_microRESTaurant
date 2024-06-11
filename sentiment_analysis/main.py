@@ -7,19 +7,49 @@ def handle_key_error(e):
     response={
         'msg':str(e)
     }
-    return response, 400
+    headers = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Max-Age": "3600"
+    }
+    return response, 400,headers
 
 @functions_framework.errorhandler(AssertionError)
 def handle_assertion_error(e):
     response={
         'msg': "Method not allowed"
     }
-    return response, 405
+    headers = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Max-Age": "3600"
+    }
+    return response, 405,headers
 
 
 
 @functions_framework.http
 def sentiment_api(request):
+
+     # Set CORS headers for the preflight request
+    if request.method == "OPTIONS":
+        headers = {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET",
+            "Access-Control-Allow-Headers": "Content-Type",
+            "Access-Control-Max-Age": "3600"
+        }
+        return ("", 204, headers)
+
+    # Set CORS headers for the main request
+    headers = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Max-Age": "3600"
+    }
 
     assert request.method == "POST" #checking that the only method used is POST
 
@@ -51,4 +81,4 @@ def sentiment_api(request):
             "scale": 0,
             "msg"  : "no valid review message, please review your message"
         }
-    return response,200
+    return response,200,headers

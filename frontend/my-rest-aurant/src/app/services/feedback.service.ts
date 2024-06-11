@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class FeedbackService {
 
-  backEndAddress: string = "https://backend-nzaawxvneq-uc.a.run.app/";
+  backEndAddress: string = "http://127.0.0.1:57887/";
 
   constructor(private http: HttpClient) { }
 
