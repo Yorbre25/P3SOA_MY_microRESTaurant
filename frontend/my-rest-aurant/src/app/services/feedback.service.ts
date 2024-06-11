@@ -1,13 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { apiUrl } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FeedbackService {
 
-  backEndAddress: string = "http://127.0.0.1:57887/";
+  backEndAddress: string = apiUrl;
 
   constructor(private http: HttpClient) { }
 
