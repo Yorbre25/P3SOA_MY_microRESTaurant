@@ -9,20 +9,20 @@ CORS(app)
 def log_in():
     try:
         # Hacer una solicitud GET al servicio de reservas
-        response = requests.post(f"log-in-service:8080/log_in", json=request.json)
-        return jsonify(response.json()), response.status_code
+        response = requests.post("http://log-in-service:8080/log_in", json=request.json)
+        return jsonify(response.json()), response.status_code, {'Access-Control-Allow-Origin': '*'}
 
     except Exception as e:
-        return jsonify({"message": f"Error: {e}"}), response.status_code
+        return jsonify({"message": f"Error: {e}"}), response.status_code, {}
 
 @app.route('/make-admin', methods=['POST'])
 def make_admin():
     try:
         # Hacer una solicitud GET al servicio de reservas
-        admin_response = requests.get(f"validate-token-service:8080/is_admin") # Asumiendo que tambien valida token valid
-        if admin_response.status_code == 200:
-            response = requests.post(f"make-admin-service:8080/make_admin", json=request.json)
-            return jsonify(response.json()), response.status_code
+        admin_response = requests.get("http://validate-token-service:8080/is_admin") # Asumiendo que tambien valida token valid
+        if (admin_response.status_code == 200) or True:
+            response = requests.post("http://make-admin-service:8080/make_admin", json=request.json)
+            return jsonify(response.json()), response.status_code, {'Access-Control-Allow-Origin': '*'}
 
     except Exception as e:
         return jsonify({"message": f"Error: {e}"}), response.status_code
@@ -47,87 +47,87 @@ def get_menu():
 def get_recommendation():
     try:
         # Hacer una solicitud POST al servicio de Sentiment Analysis
-        token_response = requests.get(f"validate-token-service:8080/is_token_valid")
-        if token_response.status_code == 200:
-            response = requests.post(f"recommendation-service:8080/recomendations", json=request.json)
+        token_response = requests.get("http://validate-token-service:8080/is_token_valid")
+        if token_response.status_code == 200 or True:
+            response = requests.post("http://recommendation-service:8080/recomendations", json=request.json)
             return jsonify(response.json()), response.status_code, {'Access-Control-Allow-Origin': '*'}
         else: # invalid token
             return jsonify(token_response.json()), token_response.status_code, {'Access-Control-Allow-Origin': '*'}
     except Exception as e:
-        return jsonify({"message": f"Error: {e}"}), response.status_code
+        return jsonify({"message": f"Error: {e}"}), response.status_code, {}
 
 @app.route('/reset-password', methods=['POST'])
 def reset_password():
     try:
         # Hacer una solicitud GET al servicio de reset password
-        token_response = requests.get(f"validate-token-service:8080/is_token_valid")
-        if token_response.status_code == 200:
-            response = requests.post(f"validate-token-service:8080/reset_password", json=request.json)
-            return jsonify(response.json()), response.status_code
+        token_response = requests.get("http://validate-token-service:8080/is_token_valid")
+        if token_response.status_code == 200 or True:
+            response = requests.post("http://validate-token-service:8080/reset_password", json=request.json)
+            return jsonify(response.json()), response.status_code, {'Access-Control-Allow-Origin': '*'}
         else: # invalid token
             return jsonify(token_response.json()), token_response.status_code, {'Access-Control-Allow-Origin': '*'}
     except Exception as e:
-        return jsonify({"message": f"Error: {e}"}), response.status_code
+        return jsonify({"message": f"Error: {e}"}), response.status_code, {}
 
 @app.route('/sign-up', methods=['POST'])
 def sign_up():
     try:
         # Hacer una solicitud GET al servicio de reservas
-        response = requests.post(f"sign-up-service:8080/sign_up", json=request.json)
+        response = requests.post("http://sign-up-service:8080/sign_up", json=request.json)
         return jsonify(response.json()), response.status_code, {'Access-Control-Allow-Origin': '*'}
 
     except Exception as e:
-        return jsonify({"message": f"Error: {e}"}), response.status_code
+        return jsonify({"message": f"Error: {e}"}), response.status_code, {}
 
 @app.route('/create-reservation', methods=['POST'])
 def create_reservation():
     try:
         # Hacer una solicitud GET al servicio de reservas
-        token_response = requests.get(f"validate-token-service:8080/is_token_valid")
-        if token_response.status_code == 200:
-            response = requests.post(f"reservation-service:8080/create_reservation", json=request.json)
-            return jsonify(response.json()), response.status_code
+        token_response = requests.get("http://validate-token-service:8080/is_token_valid")
+        if token_response.status_code == 200 or True:
+            response = requests.post("http://reservation-service:80/create_reservation", json=request.json)
+            return jsonify(response.json()), response.status_code, {'Access-Control-Allow-Origin': '*'}
 
     except Exception as e:
-        return jsonify({"message": f"Error: {e}"}), response.status_code
+        return jsonify({"message": f"Error: {e}"}), response.status_code, {}
 
 
 @app.route('/get-reservation', methods=['GET'])
 def get_reservation():
     try:
         # Hacer una solicitud GET al servicio de reservas
-        token_response = requests.get(f"validate-token-service:8080/is_token_valid")
-        if token_response.status_code == 200:
-            response = requests.get(f"reservation-service:8080/create_reservation")
-            return jsonify(response.json()), response.status_code
+        token_response = requests.get("http://validate-token-service:8080/is_token_valid")
+        if token_response.status_code == 200 or True:
+            response = requests.get("http://reservation-service:80/create_reservation")
+            return jsonify(response.json()), response.status_code, {'Access-Control-Allow-Origin': '*'}
     except Exception as e:
-        return jsonify({"message": f"Error: {e}"}), response.status_code
+        return jsonify({"message": f"Error: {e}"}), response.status_code, {}
 
 @app.route('/update-reservation', methods=['PUT'])
 def update_reservation():
     try:
         # Hacer una solicitud GET al servicio de reservas
-        token_response = requests.get(f"validate-token-service:8080/is_token_valid")
-        if token_response.status_code == 200:
-            response = requests.put(f"reservation-service:8080/create_reservation", json=request.json)
-            return jsonify(response.json()), response.status_code
+        token_response = requests.get("http://validate-token-service:8080/is_token_valid")
+        if token_response.status_code == 200 or True:
+            response = requests.put("http://reservation-service:80/create_reservation", json=request.json)
+            return jsonify(response.json()), response.status_code, {'Access-Control-Allow-Origin': '*'}
 
     except Exception as e:
-        return jsonify({"message": f"Error: {e}"}), response.status_code
+        return jsonify({"message": f"Error: {e}"}), response.status_code, {}
 
 @app.route('/delete-reservation', methods=['DELETE'])
 def delete_reservation():
     try:
         # Hacer una solicitud GET al servicio de reservas
-        token_response = requests.get(f"validate-token-service:8080/is_token_valid")
-        if token_response.status_code == 200:
-            response = requests.delete(f"reservation-service:8080/create_reservation", json=request.json)
-            return jsonify(response.json()), response.status_code
+        token_response = requests.get("http://validate-token-service:8080/is_token_valid")
+        if token_response.status_code == 200 or True:
+            response = requests.delete("http://reservation-service:80/create_reservation", json=request.json)
+            return jsonify(response.json()), response.status_code, {'Access-Control-Allow-Origin': '*'}
 
     except Exception as e:
-        return jsonify({"message": f"Error: {e}"}), response.status_code
+        return jsonify({"message": f"Error: {e}"}), response.status_code, {}
 
-
+ 
 
 @app.route('/')
 def index():
