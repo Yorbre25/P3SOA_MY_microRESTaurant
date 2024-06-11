@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from firebase_credentials import firebase_config
 import firebase_admin
 from firebase_admin import auth
@@ -8,6 +9,7 @@ import pyrebase
 import requests
 
 app = Flask(__name__)
+CORS(app) # Allow CORS for all domains
 
 # Init Firebase SDK to create user
 firebase = pyrebase.initialize_app(firebase_config)
