@@ -15,7 +15,7 @@ export class UserAccessService {
 
   checkLogin(email: string, password: string): Observable<any>{
     const body = { email, password };
-    return this.http.post(this.backEndAddress + "logIn", body).pipe(catchError(this.handleError));
+    return this.http.post(this.backEndAddress + "log-in", body).pipe(catchError(this.handleError));
   }
 
   createAccount(name: string, email: string, password: string): Observable<any>{
@@ -23,7 +23,7 @@ export class UserAccessService {
       'Access-Control-Allow-Origin': '*'
     });
     const body = {name, email, password}
-    return this.http.post(this.backEndAddress + "signUp", body).pipe(catchError(this.handleError));
+    return this.http.post(this.backEndAddress + "sign-up", body).pipe(catchError(this.handleError));
   }
 
   resetPassword(email: string): Observable<any>{
@@ -40,6 +40,14 @@ export class UserAccessService {
     });
     const body = {email}
     return this.http.post(this.backEndAddress + "prmoteToAdmin", body).pipe(catchError(this.handleError));
+  }
+
+  isAdmin(token: string): Observable<any>{
+    const headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': '*',
+      'Authorization': token
+    });
+    return this.http.get(this.backEndAddress + "is-admin").pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {

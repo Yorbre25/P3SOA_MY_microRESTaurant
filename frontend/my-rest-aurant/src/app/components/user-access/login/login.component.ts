@@ -32,9 +32,18 @@ export class LoginComponent {
     this.userAccessService.checkLogin(this.username, this.password).subscribe({
       next: (result: any) => {
           console.log({ result });
-          sessionStorage.setItem('email', result.user.email);
-          sessionStorage.setItem('isAdmin', result.isAdmin);
-          sessionStorage.setItem('accessToken', result.user.stsTokenManager.accessToken);
+          sessionStorage.setItem('email', result.email);
+          this.userAccessService.isAdmin(result.idToken).subscribe({
+            next: (result: any) => {
+              console.log({ result });
+              // sessionStorage.setItem('isAdmin', result.isAdmin);
+            },
+            error: (error: any) => {
+              console.error(error);
+              this.errorMessage = error;
+            }
+          });
+          sessionStorage.setItem('idToken', result.idToken);
           this.router.navigate(['/home']);
       },
       error: (error: any) => {

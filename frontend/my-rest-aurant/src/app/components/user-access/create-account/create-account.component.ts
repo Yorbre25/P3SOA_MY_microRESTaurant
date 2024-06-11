@@ -38,8 +38,8 @@ export class CreateAccountComponent {
       next: (result: any) => {
           console.log({ result });
           sessionStorage.setItem('email', result.email);
-          sessionStorage.setItem('isAdmin', 'false');
-          sessionStorage.setItem('accessToken', result.stsTokenManager.accessToken);
+          // sessionStorage.setItem('isAdmin', 'false');
+          sessionStorage.setItem('accessToken', result.idToken);
           this.router.navigate(['/home']);
       },
       error: (error: any) => {

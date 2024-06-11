@@ -9,11 +9,21 @@ CORS(app)
 def log_in():
     try:
         # Hacer una solicitud GET al servicio de reservas
-        response = requests.post("http://log-in-service:8080/log_in", json=request.json)
+        response = requests.post("http://login-service:8080/log_in", json=request.json)
         return jsonify(response.json()), response.status_code, {'Access-Control-Allow-Origin': '*'}
 
     except Exception as e:
-        return jsonify({"message": f"Error: {e}"}), response.status_code, {}
+        return jsonify({"message": f"Error: {e}"}), 500, {}
+
+@app.route('/is-admin', methods=['GET'])
+def is_admin():
+    try:
+        # Hacer una solicitud GET al servicio de reservas
+        response = requests.get("http://validate-token-service:8080/is_admin", json=request.json)
+        return jsonify(response.json()), response.status_code, {'Access-Control-Allow-Origin': '*'}
+
+    except Exception as e:
+        return jsonify({"message": f"Error: {e}"}), 500, {}
 
 @app.route('/make-admin', methods=['POST'])
 def make_admin():
@@ -83,7 +93,7 @@ def reset_password():
 def sign_up():
     try:
         # Hacer una solicitud GET al servicio de reservas
-        response = requests.post("http://sign-up-service:8080/sign_up", json=request.json)
+        response = requests.post("http://signup-service:8080/sign_up", json=request.json)
         return jsonify(response.json()), response.status_code, {'Access-Control-Allow-Origin': '*'}
 
     except Exception as e:

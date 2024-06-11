@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+# from flask_cors import CORS
 from firebase_credentials import firebase_config
 import firebase_admin
 from firebase_admin import auth
@@ -9,7 +9,7 @@ import pyrebase
 import requests
 
 app = Flask(__name__)
-CORS(app) # Allow CORS for all domains
+# CORS(app) # Allow CORS for all domains
 
 # Init Firebase SDK to create user
 firebase = pyrebase.initialize_app(firebase_config)
@@ -19,6 +19,16 @@ authentification = firebase.auth()
 cred = credentials.Certificate('firebase_admin_sdk_credentials.json')
 firebase_admin.initialize_app(cred)
 db = firestore.client()
+
+@app.after_request
+def add_cors_headers(response):
+    # Cambia '*' por el dominio específico que quieres permitir, si es necesario
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS')
+
+    
+    return response
 
 @app.route('/sign_up', methods=['POST'])
 def sign_up():

@@ -1,4 +1,8 @@
 @REM Primero hacer lo que putas hagan para usar minikube con docker
+@REM minikube delete
+@REM minikube start
+@REM minikube docker-env
+@REM & minikube -p minikube docker-env --shell powershell | Invoke-Expression
 
 
 docker build -t signup Auth/sign_up
@@ -9,8 +13,9 @@ docker build -t validate-token Auth/validate-token
 docker build -t backend-service backend
 docker build -t menu-service menu
 docker build -t recommendation-service recommendation-service
-docker build -t my-reservations reservations
+docker build -t my-reservations reservation_service
 docker build -t sentiment-analysis-service sentiment_analysis
+
 
 
 
@@ -25,7 +30,6 @@ kubectl apply -f .\deployments\recommendation-deployment.yaml
 kubectl apply -f .\deployments\reservation-deployment.yaml
 kubectl apply -f .\deployments\sentiment-analysis-deployment.yaml
 
-kubectl get pods
 
 kubectl apply -f .\services\sign-up-service.yaml
 kubectl apply -f .\services\log-in-service.yaml
@@ -38,6 +42,7 @@ kubectl apply -f .\services\recommendation-service.yaml
 kubectl apply -f .\services\reservation-service.yaml
 kubectl apply -f .\services\sentiment-analysis-service.yaml
 
+kubectl get pods
 
 @REM minikube service signup-service --url
 @REM minikube service login-service --url
