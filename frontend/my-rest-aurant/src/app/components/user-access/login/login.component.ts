@@ -33,16 +33,16 @@ export class LoginComponent {
       next: (result: any) => {
           console.log({ result });
           sessionStorage.setItem('email', result.email);
-          this.userAccessService.isAdmin(result.idToken).subscribe({
-            next: (result: any) => {
-              console.log({ result });
-              // sessionStorage.setItem('isAdmin', result.isAdmin);
-            },
-            error: (error: any) => {
-              console.error(error);
-              this.errorMessage = error;
-            }
-          });
+          // this.userAccessService.isAdmin(result.idToken).subscribe({
+          //   next: (result: any) => {
+          //     console.log({ result });
+          //     // sessionStorage.setItem('isAdmin', result.isAdmin);
+          //   },
+          //   error: (error: any) => {
+          //     console.error(error);
+          //     this.errorMessage = error;
+          //   }
+          // });
           sessionStorage.setItem('idToken', result.idToken);
           this.router.navigate(['/home']);
       },
