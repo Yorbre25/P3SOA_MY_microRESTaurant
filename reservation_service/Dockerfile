@@ -13,4 +13,4 @@ COPY . ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Run the web service on container startup.
-CMD functions-framework --target=create_reservation --host=0.0.0.0 --debug
+CMD functions-framework --target=manage_reservation --host=0.0.0.0 --debug
