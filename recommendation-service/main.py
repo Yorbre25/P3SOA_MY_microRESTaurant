@@ -9,38 +9,86 @@ def handle_assertion_error(e):
     body={
         "msg":"Method not allowed"
     }
-    return body, 405
+    headers = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Max-Age": "3600"
+    }
+    return body, 405,headers
 
 @functions_framework.errorhandler(KeyError) #"Check json input structure. The json should have a meal object a a recommmendation_of's list of string"
 def handle_key_error(e):
     body={
         "msg": "Bad request the json must hava a meal and a recommendation of keys. The meal must have the fields: main_dish,drink and dessert"
     }
-    return body, 400
+    headers = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Max-Age": "3600"
+    }
+    return body, 400,headers
 
 @functions_framework.errorhandler(ValidationError) #"Checks the meal object type and the type of recommedation of"
 def handle_validation_error(e):
     body={
         "msg":"Bad request the wrong type for either meal for recommendation_of"
     }
-    return body , 400
+    headers = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Max-Age": "3600"
+    }
+    return body , 400,headers
 
 @functions_framework.errorhandler(ValueError) #"If the main_dish/drink/dessert or type of item does not exist in the database"
 def handle_value_error(e):
     body={
         "msg":str(e)
     }
-    return body, 400
+    headers = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Max-Age": "3600"
+    }
+    return body, 400,headers
 
 @functions_framework.errorhandler(TypeError) #"If the main_dish/drink/dessert or type of item does not exist in the database"
 def handle_type_error(e):
     body= {
         "msg": "The item selected its not in the database"
     }
-    return body, 400
+    headers = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Max-Age": "3600"
+    }
+    return body, 400,headers
 
 @functions_framework.http
 def recommendations(request):
+    # Set CORS headers for the preflight request
+    if request.method == "OPTIONS":
+        headers = {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET",
+            "Access-Control-Allow-Headers": "Content-Type",
+            "Access-Control-Max-Age": "3600"
+        }
+        return ("", 204, headers)
+
+    # Set CORS headers for the main request
+    headers = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Max-Age": "3600"
+    }
+
     
     assert request.method == "POST" #checking that the only method used is POST
 
@@ -48,7 +96,7 @@ def recommendations(request):
     request_json = request.get_json(silent=True)
     meal,recommedation_of=process_input(request_json)
     suggestion=get_predefined_recom(meal,recommedation_of)
-    return suggestion.json(),200
+    return suggestion.json(),200,headers
 
 def process_input(request_json):
     meal_json=request_json['meal']

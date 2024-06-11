@@ -47,12 +47,12 @@ def get_menu():
 def get_recommendation():
     try:
         # Hacer una solicitud POST al servicio de Sentiment Analysis
-        token_response = requests.get("http://validate-token-service:8080/is_token_valid")
-        if token_response.status_code == 200 or True:
-            response = requests.post("http://recommendation-service:8080/recomendations", json=request.json)
-            return jsonify(response.json()), response.status_code, {'Access-Control-Allow-Origin': '*'}
-        else: # invalid token
-            return jsonify(token_response.json()), token_response.status_code, {'Access-Control-Allow-Origin': '*'}
+        #token_response = requests.get("http://validate-token-service:8080/is_token_valid")
+        #if token_response.status_code == 200 or True:
+        response = requests.post("http://recommendation-service:8080/recommendations", json=request.json)
+        return jsonify(response.json()), response.status_code, {'Access-Control-Allow-Origin': '*'}
+        #else: # invalid token
+            #return jsonify(token_response.json()), token_response.status_code, {'Access-Control-Allow-Origin': '*'}
     except Exception as e:
         return jsonify({"message": f"Error: {e}"}), response.status_code, {}
 

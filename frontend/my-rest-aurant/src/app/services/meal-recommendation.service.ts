@@ -12,7 +12,7 @@ export class MealRecommendationService {
   private _selectedMeals: BehaviorSubject<Meal[]> = new BehaviorSubject<Meal[]>([]);
   selectedMeals$: Observable<Meal[]> = this._selectedMeals.asObservable();
 
-  backEndAddress: string = "http://127.0.0.1:52682/";
+  backEndAddress: string = "http://127.0.0.1:55660/";
   
   constructor(private http: HttpClient) { }
 
