@@ -3,3 +3,5 @@ pydantic
 typing
 requests
 flask
+Werkzeug==3.0.2
+Flask-Cors==4.0.0
